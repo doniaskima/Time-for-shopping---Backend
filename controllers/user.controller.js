@@ -13,14 +13,14 @@ const loginUserAndSendCredentials = async(req, res) => {
             const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
                 expiresIn: "24h",
             });
-            return res.json({
+            return res.status(200).json({
                 status: true,
                 message: "Login Successful",
                 user: _.pick(user, ["_id", "name", "email"]),
                 token: token,
             });
         }
-        return res.json({
+        return res.status(400).json({
             status: false,
             message: "Wrong Password!",
             user: null,
@@ -50,7 +50,7 @@ const signupUserAndSendCredentials = async(req, res) => {
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
             expiresIn: "24h",
         });
-        return res.json({
+        return res.status(200).json({
             status: true,
             user: _.pick(newUser, ["_id", "name", "email"]),
             token: token,
