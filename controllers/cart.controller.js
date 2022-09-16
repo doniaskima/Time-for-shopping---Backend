@@ -103,8 +103,45 @@ const removeItem = async(req, res) => {
 }
 
 
+const changeQuantity = async(req, res) => {
+    try {
+        const { userId } = req.params;
+        const { productId, quantity } = req.body;
+        const user = await User.findById(userId);
+        let cart = await Cart.findById(user.cart);
+        const productExist = cart.items.some(
+            ({ product }) => product.toString() == productId
+        );
+        if (productExist) {
+            let items = cart.items.map((item) =>
+                item.product.toString() == productId ?
+                {...item._doc, quantity: quantity } :
+                item
+            );
+            cart.items = items;
+            cart = await cart.save();
+        } else {
+            return res.json({
+                success: true,
+                message: "Invalid Request",
+            });
+        }
+        return res.json({
+            success: true,
+            items: cart.items,
+            message: "Product quantity changed",
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
 module.exports = {
     fetchAllCartItems,
     addToCart,
     removeItem,
+    changeQuantity,
 };
