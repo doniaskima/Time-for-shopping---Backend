@@ -10,7 +10,7 @@ const { initializeDBConnection } = require("./config/db.config");
 const userRouter = require("./routers/user.router");
 const cartRouter = require("./routers/cart.router");
 const productRouter = require("./routers/product.router");
-
+const wishlistRouter = require("./routers/wishlist.router");
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
 app.use("/users", userRouter);
 app.use("/carts", cartRouter);
 app.use("/products", productRouter);
+app.use("/wishlists", wishlistRouter);
 
 const Port = process.env.PORT || 5000;
 app.listen(port, () => {
