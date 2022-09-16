@@ -70,7 +70,35 @@ const addToCart = async(req, res) => {
 
 const removeItem = async(req, res) => {
     try {
+        const { userId, productId } = req.params;
+        const user = await User.findById(userId);
+        const cart = await Cart.findById(user.cart);
+        const productExist = cart.items.some(
+            ({ product }) => product.toString() == productId
+        );
+        if (productExist) {
+            await cart.updateOne({ $pull: { items: { product: productId } } });
+        } else {
+            return res.json({
+                success: true,
+                message: "Invalid request"
+            });
+        }
+        const cartItems = await Cart.findById(user.cart).populate("items.product");
+        return res.status(200).json({
+            sucess: true,
+            items: cartItems,
+            message: "Product removed from cart",
 
+        })
+
+        //$pull
+        // operator removes from an existing array all instances of a value or values that match a specified condition.
+    } catch {
+        return res.status(400).json({
+            success: false,
+            message: error.message,
+        })
     }
 }
 
@@ -78,4 +106,5 @@ const removeItem = async(req, res) => {
 module.exports = {
     fetchAllCartItems,
     addToCart,
+    removeItem,
 };

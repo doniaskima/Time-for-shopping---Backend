@@ -62,6 +62,7 @@ const signupUserAndSendCredentials = async(req, res) => {
             user: _.pick(newUser, ["_id", "name", "email"]),
             token: token,
         });
+        //The _.pick() method is used to return a copy of the object that is composed of the picked object properties
     } catch (error) {
         console.trace(error);
         return res.json({ success: false, message: error.message });
