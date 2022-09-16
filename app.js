@@ -3,14 +3,17 @@ const port = process.env.PORT || 3000;
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const userRouter = require("./routers/user.router");
 const { initializeDBConnection } = require("./config/db.config");
+
+
+const userRouter = require("./routers/user.router");
+const cartRouter = require("./routers/cart.router");
+
+
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 initializeDBConnection();
-
-
 
 app.get("/", (req, res) => {
     return res.json({ status: "Welcome to Store server" });
@@ -18,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRouter);
+app.use("/carts", cartRouter);
 
 const Port = process.env.PORT || 5000;
 app.listen(port, () => {
