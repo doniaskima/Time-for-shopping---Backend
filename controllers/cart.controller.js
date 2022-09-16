@@ -5,21 +5,17 @@ const fetchAllCartItems = async(req, res) => {
     try {
         const { userId } = req.params;
         const user = await User.findById(userId);
-        const cart = await Cart.findById(user.cart);
-        if (!cart) {
+
+        if (user.cart !== undefined) {
+            const cart = await Cart.findById(user.cart).populate("items.product");
             return res.json({
-                success: false,
-                massage: "Cart hasn't been created yet",
+                success: true,
+                items: cart.items,
             });
         }
-        const cartItems = await cart.execPopulate({
-            path: "items",
-            populate: { path: "Product" },
-        });
-        console.log(cartItems);
         return res.json({
-            success: true,
-            items: cartItems,
+            success: false,
+            massage: "Cart hasn't been created yet",
         });
     } catch (error) {
         res.json({
@@ -69,6 +65,12 @@ const addToCart = async(req, res) => {
             success: false,
             message: error.message,
         });
+    }
+}
+
+const removeItem = async(req, res) => {
+    try {
+
     }
 }
 

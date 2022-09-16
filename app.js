@@ -3,16 +3,19 @@ const port = process.env.PORT || 3000;
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const morgan = require("morgan");
 const { initializeDBConnection } = require("./config/db.config");
 
 
 const userRouter = require("./routers/user.router");
 const cartRouter = require("./routers/cart.router");
+const productRouter = require("./routers/product.router");
 
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(morgan());
 initializeDBConnection();
 
 app.get("/", (req, res) => {
@@ -22,6 +25,7 @@ app.get("/", (req, res) => {
 
 app.use("/users", userRouter);
 app.use("/carts", cartRouter);
+app.use("/products", productRouter);
 
 const Port = process.env.PORT || 5000;
 app.listen(port, () => {
