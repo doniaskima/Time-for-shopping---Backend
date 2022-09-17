@@ -6,7 +6,6 @@ const cors = require("cors");
 const morgan = require("morgan");
 const { initializeDBConnection } = require("./config/db.config");
 
-
 const userRouter = require("./routers/user.router");
 const cartRouter = require("./routers/cart.router");
 const productRouter = require("./routers/product.router");
