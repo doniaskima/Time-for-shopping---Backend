@@ -17,16 +17,16 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan());
 initializeDBConnection();
-
+const authenticate = require("./middleware/authenticate");
 app.get("/", (req, res) => {
     return res.json({ status: "Welcome to Store server" });
 
 });
 
 app.use("/users", userRouter);
-app.use("/carts", cartRouter);
 app.use("/products", productRouter);
-app.use("/wishlists", wishlistRouter);
+app.use("/carts", authenticate, cartRouter);
+app.use("/wishlists", authenticate, wishlistRouter);
 
 const Port = process.env.PORT || 5000;
 app.listen(port, () => {
