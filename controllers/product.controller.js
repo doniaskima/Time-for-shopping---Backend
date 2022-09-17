@@ -62,4 +62,42 @@ const createProduct = async(req, res) => {
         return res.status(500).json(err);
     }
 };
-module.exports = { fetchAllProducts, fetchProductById, createProduct };
+
+const fetchFeaturedProducts = async(_, res) => {
+    try {
+        const products = await FeaturedProduct.find({});
+        return res.json({
+            success: true,
+            products: products,
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            products: null,
+            message: error.message,
+        });
+    }
+}
+
+const fetchProductCategories = async(_, res) => {
+    try {
+        const categories = await Category.find({});
+        return res.json({
+            success: true,
+            categories: categories,
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            categories: null,
+            message: error.message,
+        });
+    }
+}
+module.exports = {
+    fetchAllProducts,
+    fetchProductById,
+    createProduct,
+    fetchFeaturedProducts,
+    fetchProductCategories,
+};
