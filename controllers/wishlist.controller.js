@@ -69,4 +69,36 @@ const addToWishlist = async(req, res) => {
     }
 }
 
-module.exports = { fetchWishlistItems, addToWishlist };
+const removeItem = async(req, res) => {
+    try {
+        const { userId, productId } = req.params;
+        const user = await User.findById(userId);
+        const wishlist = await Wishlist.findById(user.wishlist);
+        const productExist = wishlist.items.some(
+            (product) => product.toString() == productId
+        );
+        if (productExist) {
+            await wishlist.updateOne({ $pull: { items: productId } });
+        } else {
+            return res.json({
+                success: true,
+                message: "Invalid Request",
+            });
+        }
+        const wishlistItems = await Wishlist.findById(user.wishlist).populate(
+            "items"
+        );
+        return res.json({
+            success: true,
+            items: wishlistItems,
+            message: "Product removed from wishlist",
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
+module.exports = { fetchWishlistItems, addToWishlist, removeItem };
