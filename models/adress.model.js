@@ -1,41 +1,39 @@
 const mongoose = require("mongoose");
 
-
-const adressSchema = mongoose.Schema({
+const addressSchema = mongoose.Schema({
     name: {
         type: String,
         trim: true,
         required: "Name is required",
     },
-    mobileNom: {
+    mobileNo: {
         type: String,
         trim: true,
-        required: "Mobile number is required !",
+        required: "Mobile number is required!",
     },
-    adresse: {
+    address: {
         type: String,
         trim: true,
-        required: "Adress is required !",
+        required: "Address is required!",
     },
     pinCode: {
         type: String,
         trim: true,
-        required: "Pin Code is required !",
+        required: "Pin code is required!",
     },
     city: {
         type: String,
-        rim: true,
-        required: "City is required !",
+        trim: true,
+        required: "City is required!",
     },
     state: {
         type: String,
         trim: true,
-        required: "State is required !",
+        required: "State is required!",
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
 });
 
-
-const Adress = mongoose.model("Adress", addressSchema);
+const Address = mongoose.model("Address", addressSchema);
 
 module.exports = Address;
