@@ -10,6 +10,7 @@ const userRouter = require("./routers/user.router");
 const cartRouter = require("./routers/cart.router");
 const productRouter = require("./routers/product.router");
 const wishlistRouter = require("./routers/wishlist.router");
+const addressRouter = require("./routers/address.router");
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,6 +27,7 @@ app.use("/users", userRouter);
 app.use("/products", productRouter);
 app.use("/carts", authenticate, cartRouter);
 app.use("/wishlists", authenticate, wishlistRouter);
+app.use("/addresses", authenticate, addressRouter);
 
 const Port = process.env.PORT || 5000;
 app.listen(port, () => {
