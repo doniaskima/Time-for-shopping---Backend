@@ -114,8 +114,7 @@ const changeQuantity = async(req, res) => {
         );
         if (productExist) {
             let items = cart.items.map((item) =>
-                item.product.toString() == productId ?
-                {...item._doc, quantity: quantity } :
+                item.product.toString() == productId ? {...item._doc, quantity: quantity } :
                 item
             );
             cart.items = items;
