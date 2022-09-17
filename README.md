@@ -17,7 +17,9 @@ POST /users/signup - Providing name, password, and unique email would add a new 
 Products:
 
 GET /products - fetches all products.
-GET /products/single-product/:productId - fetches single product.
+
+GET /products/single-product/:productId - fetches 
+single product.
 GET /products/categories - fetches product categories
 GET /products/featured - fetches featured products
 
