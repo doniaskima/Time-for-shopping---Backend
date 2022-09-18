@@ -10,7 +10,11 @@
         "start": "node index.js",
         "server": "nodemon index.js"
     },
-    "author": "",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/doniaskima/Time-for-shopping---Backend/blob/master/package.json"
+    },
+    "author": "Donia skima",
     "license": "ISC",
     "dependencies": {
         "bcrypt": "^5.0.1",
